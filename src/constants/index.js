@@ -22,12 +22,11 @@ module.exports = {
         "testBookDetails": "#main > div.container.single-post-container > div.col-lg-8.content_detail.p20 > div.content > div > div > div > ul",
         "byjuTitle": "#__next > section > section > div > div.flex-row-l.flex-column.fixed-width-container.flex.flex-grow-1.justify-between.mt2 > div.post_articleMain__1KWsN.mr4-l.mr0.exam-category-main > div.relative.flex.flex-column.w-100 > div.relative.transition-all > div > div.custom-html-style.mb3.ph3.ph0-l.overflow-x-visible.new-html-styles.post-body.article-content.overflow-y-hidden.ph3-3.roboto > h3 > strong > span",
         "byjuDetails": "#__next > section > section > div > div.flex-row-l.flex-column.fixed-width-container.flex.flex-grow-1.justify-between.mt2 > div.post_articleMain__1KWsN.mr4-l.mr0.exam-category-main > div.relative.flex.flex-column.w-100 > div.relative.transition-all > div > div.custom-html-style.mb3.ph3.ph0-l.overflow-x-visible.new-html-styles.post-body.article-content.overflow-y-hidden.ph3-3.roboto > ul",
-        "indianExpressHeadings": '#section > div > div.row > div > div > li > strong > a'
-        , "indianExpressNewsTypes": '#section > div > div.row > div > div > li > span > a',
-        "indianExpressHeadingsLinks": "#section > div > div.row > div > div > li > strong > a"
-        , "restOfParagraphsIE": "#pcl-full-content > div > p",
-        "introParagraphIE": "#pcl-full-content > p"
-        , "writtenByIE": "#written_by1",
+        "indianExpressHeadings": '#section > div > div > div.leftpanel > div > div.section.ev-meter-content > ul > li > strong > a',
+        "indianExpressNewsTypes": '#section > div > div > div.leftpanel > div > div.section.ev-meter-content > ul > li > span > a',
+        "indianExpressHeadingsLinks": "#section > div > div > div.leftpanel > div > div.section.ev-meter-content > ul > li > strong > a", "restOfParagraphsIE": "#pcl-full-content > div > p",
+        "introParagraphIE": "#pcl-full-content > p",
+        "writtenByIE": "#written_by1",
         "introDescriptionIE": "#section > div > div:nth-child(1) > div > h2",
         "toiHeadings": "#c_wdt_list_1 > ul > li > span > a",
         "htHeadings": "#dataHolder > div > h3 > a",

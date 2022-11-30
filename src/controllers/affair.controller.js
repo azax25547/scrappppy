@@ -122,8 +122,8 @@ module.exports = {
                     })
 
                     if (page) {
-                        toiHeadings = [];
-                        toiLinks = [];
+                        // toiHeadings = [];
+                        // toiLinks = [];
 
                         $ = await getScrappedData(`${constants.urls.TIMES_OF_INDIA}/${page}`);
 
@@ -224,9 +224,9 @@ module.exports = {
                     if (page) {
                         $ = await getScrappedData(`${constants.urls.OTV}/${page}`);
 
-                        otvHeadings = [];
-                        otvLinks = [];
-                        otvShortDescription = [];
+                        // otvHeadings = [];
+                        // otvLinks = [];
+                        // otvShortDescription = [];
 
                         $(constants.selectors.otvHeading).each((i, el) => {
                             otvHeadings.push($(el).text())

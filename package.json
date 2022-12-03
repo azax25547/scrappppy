@@ -6,7 +6,7 @@
   "scripts": {
     "start-dev": "nodemon src/index.js",
     "start": "node src/index.js",
-    "test": "mocha src/test/**/*.js --exit"
+    "test": "mocha src/test/**/*.js --timeout=5000 --exit"
   },
   "keywords": [],
   "author": "",

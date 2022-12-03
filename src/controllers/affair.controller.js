@@ -81,7 +81,7 @@ module.exports = {
                     let indianExpressHeadings = [];
                     let indianExpressHeadingsLinks = [];
                     let indianExpressNewsTypes = [];
-
+                    let sampleTest = "Hello"
                     const $ = await getScrappedData(constants.urls.INDIAN_EXPRESS);
 
                     $(constants.selectors.indianExpressHeadings).each((i, el) => indianExpressHeadings.push($(el).text()))

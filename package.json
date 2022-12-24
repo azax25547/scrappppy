@@ -6,7 +6,8 @@
   "scripts": {
     "start-dev": "nodemon src/index.js",
     "start": "node src/index.js",
-    "test": "mocha src/test/**/*.js --timeout=5000 --exit"
+    "test": "mocha src/test/**/*.js --timeout=5000 --exit",
+    "cov": "nyc --reporter=html --reporter=text mocha src/test/**/*.js --timeout=5000 --exit"
   },
   "keywords": [],
   "author": "",
@@ -24,6 +25,7 @@
     "chai": "^4.3.7",
     "mocha": "^10.1.0",
     "mockery": "^2.1.0",
+    "nyc": "^15.1.0",
     "supertest": "^6.3.1"
   }
 }

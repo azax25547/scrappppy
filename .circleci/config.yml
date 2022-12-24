@@ -1,0 +1,76 @@
+orbs: # declare what orbs we are going to use
+  node: circleci/node@4.5.1 # the node orb provides common node-related configuration
+  jira: circleci/jira@1.3.1
+  # sonarcloud: sonarsource/sonarcloud@1.0.2
+
+version: 2.1 # using 2.1 provides access to orbs and other features
+
+workflows:
+  build:
+    jobs:
+      - code-scan:
+          context: SonarCloud 
+          post-steps:
+            - jira/notify
+      - test-app:
+          filters:
+            branches:
+              only: master
+          requires:
+            - code-scan
+          post-steps:
+            - jira/notify
+      - build-image:
+          filters:
+            branches:
+              only: master
+          requires:
+            - test-app
+          post-steps:
+            - jira/notify
+
+jobs:
+  code-scan:
+    docker:
+      - image: "cimg/node:16.4"
+    steps:
+      - checkout
+      - sonarcloud/scan
+
+  test-app:
+    docker:
+      - image: "cimg/node:16.4"
+    executor: node/default
+    steps:
+      - checkout
+      - node/install-packages:
+          cache-path: ~/auth/node_modules
+          override-ci-command: npm install
+      - run:
+          command: npm run test
+      - run: npm run cov
+      - store_test_results:
+          path: ./coverage
+
+  build-image:
+    docker:
+      - image: "cimg/base:stable"
+        auth:
+          username: $DOCKER_USERNAME
+          password: $DOCKER_PASSWORD
+    steps:
+      - checkout
+      - setup_remote_docker:
+          version: 19.03.13
+      - run:
+          name: Login to dockerhub
+          command: echo "$DOCKER_PASSWORD" | docker login --username $DOCKER_USERNAME --password-stdin
+      - run:
+          name: Setup docker image
+          command: docker build -f Dockerfile.dev -t scrappy-dev .
+      - run:
+          name: tag the docker image to remote repository
+          command: docker tag scrappy-dev azax25547/scrappy-dev
+      - run:
+          name: Push the image to Dockerhub
+          command: docker push azax25547/scrappy-dev

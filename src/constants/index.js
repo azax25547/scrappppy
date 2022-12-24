@@ -40,7 +40,7 @@ module.exports = {
         // "#topnews > section > div.htImpressionTracking > div.cartHolder.bigCart.track > h3 > a"
         //otv-all
         "otvHeading": "body > section.main-article > div > div > div.col-lg-9.col-md-8.col-sm-12.col-xs-12.sticky > div > div > a > h5",
-        "otvLink": "body > section.main-article > div > div > div.col-lg-9.col-md-8.col-sm-12.col-xs-12.sticky > div > div > a",
+        "otvLink": "body > section.main-article > div > div > div.col-lg-9.col-md-8.col-sm-12.col-xs-12.sticky > div > div > a:nth-child(1)",
         "otvShortDescription": "body > section.main-article > div > div > div.col-lg-9.col-md-8.col-sm-12.col-xs-12.sticky > div > div > p",
         //toi-one
         "contextTOI": "#app > div > div.contentwrapper.clearfix > div > div._3nf_c > div._15wZO.innerbody > div.TFt6P > div._1ZNdg > div._3B0JD > div > div.fewcent-95964255 > div._3YYSt.clearfix",

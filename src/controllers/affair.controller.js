@@ -208,36 +208,47 @@ module.exports = {
                     let $ = await getScrappedData(constants.urls.OTV);
 
                     $(constants.selectors.otvHeading).each((i, el) => {
-                        otvHeadings.push($(el).text())
+                        if (!$(el).text().includes("Latest Odisha Breaking News Updates"))
+                            otvHeadings.push($(el).text())
                     })
 
                     $(constants.selectors.otvLink).each((i, el) => {
-                        otvLinks.push($(el).attr('href'))
+                        if (!$(el).attr('href').includes("latest-update"))
+                            otvLinks.push($(el).attr('href'))
                     })
 
                     $(constants.selectors.otvShortDescription).each((i, el) => {
-                        otvShortDescription.push($(el).text())
+                        if (!$(el).text().includes("OdishaTV is the best"))
+                            otvShortDescription.push($(el).text())
                     })
+
+
 
                     if (page) {
                         $ = await getScrappedData(`${constants.urls.OTV}/${page}`);
 
-                        otvHeadings = [];
-                        otvLinks = [];
-                        otvShortDescription = [];
+                        otvHeadings = []
+                        otvLinks = []
+                        otvShortDescription = []
 
                         $(constants.selectors.otvHeading).each((i, el) => {
-                            otvHeadings.push($(el).text())
+                            if (!$(el).text().includes("Latest Odisha Breaking News Updates"))
+                                otvHeadings.push($(el).text())
                         })
 
                         $(constants.selectors.otvLink).each((i, el) => {
-                            otvLinks.push($(el).attr('href'))
+                            if (!$(el).attr('href').includes("latest-update"))
+                                otvLinks.push($(el).attr('href'))
                         })
 
                         $(constants.selectors.otvShortDescription).each((i, el) => {
-                            otvShortDescription.push($(el).text())
+                            if (!$(el).text().includes("OdishaTV is the best"))
+                                otvShortDescription.push($(el).text())
                         })
                     }
+
+                    // otvHeadings = otvHeadings.filter((v) => v.contains("Latest"))
+                    // console.log(otvHeadings)
 
                     let results = [];
                     otvHeadings.map((el, i) => {

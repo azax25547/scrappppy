@@ -1,7 +1,7 @@
 orbs: # declare what orbs we are going to use
   node: circleci/node@4.5.1 # the node orb provides common node-related configuration
   jira: circleci/jira@1.3.1
-  # sonarcloud: sonarsource/sonarcloud@1.0.2
+  sonarcloud: sonarsource/sonarcloud@1.0.2
 
 version: 2.1 # using 2.1 provides access to orbs and other features
 

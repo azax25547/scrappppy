@@ -71,7 +71,6 @@ module.exports = {
         const newsPaper = req.params.name;
 
         const page = parseInt(req.query.page);
-        const limit = parseInt(req.query.limit);
 
         switch (newsPaper) {
 
@@ -99,7 +98,7 @@ module.exports = {
 
                         results.push(x)
                     })
-                    // const paginatedResult = paginate(page, limit, results);
+
                     responseJSON.data = results.filter((item) => item.type !== "Eye");
                     responseJSON.success = true;
 
@@ -276,15 +275,14 @@ module.exports = {
 
                     const $ = await getScrappedData(url);
 
-                    $(constants.selectors.restOfParagraphsIE).each((i, el) => restPara.push($(el).text()));
                     introPara.push($(constants.selectors.introParagraphIE).text());
+                    $(constants.selectors.restOfParagraphsIE).each((i, el) => restPara.push($(el).text()));
 
-                    responseJSON.data.context = introPara.concat(restPara);
-
+                    responseJSON.data.context = introPara.concat(restPara).join("").trim();
                     responseJSON.data.writtenBy = $(constants.selectors.writtenByIE).text();
                     responseJSON.data.introDescription = $(constants.selectors.introDescriptionIE).text()
-
                     responseJSON.success = true;
+
                     res.status(200).json(responseJSON);
 
                 } catch (err) {
@@ -296,16 +294,9 @@ module.exports = {
                 try {
                     const $ = await getScrappedData(url);
 
-                    const toiBody = $('#app > div > div.contentwrapper.clearfix > div > div._3nf_c > div._15wZO.innerbody > div.TFt6P > div._1ZNdg > div._3B0JD > div > div.fewcent-95964255 > div._3YYSt.clearfix').text()
-
-                    const toiWrittenBy = $('#app > div > div.contentwrapper.clearfix > div > div._3nf_c > div._15wZO.innerbody > div.TFt6P > div._36ns3 > div > div.yYIu-.byline').text()
-
-                    responseJSON.data.context = toiBody;
-                    responseJSON.data.writtenBy = toiWrittenBy.split("/")[0].trim()
-                    const success = toiBody && toiWrittenBy ? true : false;
-
-                    responseJSON.success = success;
-
+                    responseJSON.data.context = $(constants.selectors.contextTOI).text();
+                    responseJSON.data.writtenBy = $(constants.selectors.writtenByTOI).text().split("/")[0].trim()
+                    responseJSON.success = responseJSON.data.context && responseJSON.data.writtenBy ? true : false;
 
                     return res.status(200).send(responseJSON);
                 } catch (err) {
@@ -317,11 +308,36 @@ module.exports = {
                 try {
                     const $ = await getScrappedData(url);
 
-                    const htTypeE = '#dataHolder > div.fullStory.tfStory.current.videoStory > div.actionDiv.flexElm.topTime > div.secName > a'
-                    const htBodyE = "#dataHolder > div.fullStory.tfStory.current.videoStory > div.storyDetails"
+                    const htWrittenBy = $(constants.selectors.writtenByHT).text()
+                    const htIntroDescription = $(constants.selectors.introParaHT).text()
 
+                    let htContext = []
+                    $(constants.selectors.contextHT).each((i, el) => htContext.push($(el).text()))
 
+                    responseJSON.data.context = htContext.join("").trim();
+                    responseJSON.data.writtenBy = htWrittenBy;
+                    responseJSON.data.introDescription = htIntroDescription;
+                    responseJSON.success = htContext && htWrittenBy ? true : false;
 
+                    return res.status(200).send(responseJSON);
+                } catch (err) {
+                    next(err);
+                }
+                break;
+
+            case "otv":
+                try {
+                    const $ = await getScrappedData(url);
+
+                    const otvWrittenBy = $(constants.selectors.writtenByOTV).text()
+
+                    let otvContext = []
+                    $(constants.selectors.contextOTV).each((i, el) => otvContext.push($(el).text()))
+                    responseJSON.data.context = otvContext.join("").trim();
+                    responseJSON.data.writtenBy = otvWrittenBy;
+                    responseJSON.success = otvContext && otvWrittenBy ? true : false;
+
+                    return res.status(200).send(responseJSON);
                 } catch (err) {
                     next(err);
                 }

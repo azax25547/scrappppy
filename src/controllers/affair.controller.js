@@ -81,8 +81,9 @@ module.exports = {
                     let indianExpressHeadings = [];
                     let indianExpressHeadingsLinks = [];
                     let indianExpressNewsTypes = [];
-                    let sampleTest = "Hello"
                     const $ = await getScrappedData(constants.urls.INDIAN_EXPRESS);
+
+                    // check for premium types
 
                     $(constants.selectors.indianExpressHeadings).each((i, el) => indianExpressHeadings.push($(el).text()))
                     $(constants.selectors.indianExpressNewsTypes).each((i, el) => indianExpressNewsTypes.push($(el).text()))
@@ -99,7 +100,7 @@ module.exports = {
                         results.push(x)
                     })
                     // const paginatedResult = paginate(page, limit, results);
-                    responseJSON.data = results;
+                    responseJSON.data = results.filter((item) => item.type !== "Eye");
                     responseJSON.success = true;
 
                     res.status(200).json(responseJSON)
@@ -122,8 +123,8 @@ module.exports = {
                     })
 
                     if (page) {
-                        // toiHeadings = [];
-                        // toiLinks = [];
+                        toiHeadings = [];
+                        toiLinks = [];
 
                         $ = await getScrappedData(`${constants.urls.TIMES_OF_INDIA}/${page}`);
 
@@ -154,7 +155,6 @@ module.exports = {
                 try {
                     let htHeadings = [];
                     let htLinks = [];
-                    let htTypes = [];
 
                     let $ = await getScrappedData(constants.urls.HINDUSTAN_TIMES);
 
@@ -163,30 +163,29 @@ module.exports = {
                         htLinks.push($(el).attr('href'))
                     })
 
-                    $(constants.selectors.htTypes).each((i, el) => {
-                        htTypes.push($(el).text())
-                    })
 
                     if (page) {
                         htHeadings = [];
                         htLinks = [];
-                        htTypes = [];
 
                         $ = await getScrappedData(`${constants.urls.HINDUSTAN_TIMES}/page-${page}`);
 
                         $(constants.selectors.htHeadings).each((i, el) => {
                             htHeadings.push($(el).text())
                             htLinks.push($(el).attr('href'))
-                            htTypes.push($(el).text())
+
                         })
+
                     }
+
+                    console.log(htHeadings.length)
+                    console.log(htLinks.length);
 
                     let results = [];
                     htHeadings.map((el, i) => {
                         let x = {
                             heading: htHeadings[i],
                             link: `${constants.urls.HT}${htLinks[i]}`,
-                            type: htTypes[i]
                         }
                         results.push(x);
                     })
@@ -224,9 +223,9 @@ module.exports = {
                     if (page) {
                         $ = await getScrappedData(`${constants.urls.OTV}/${page}`);
 
-                        // otvHeadings = [];
-                        // otvLinks = [];
-                        // otvShortDescription = [];
+                        otvHeadings = [];
+                        otvLinks = [];
+                        otvShortDescription = [];
 
                         $(constants.selectors.otvHeading).each((i, el) => {
                             otvHeadings.push($(el).text())
@@ -293,6 +292,41 @@ module.exports = {
                 }
                 console.log();
                 break;
+            case "toi":
+                try {
+                    const $ = await getScrappedData(url);
+
+                    const toiBody = $('#app > div > div.contentwrapper.clearfix > div > div._3nf_c > div._15wZO.innerbody > div.TFt6P > div._1ZNdg > div._3B0JD > div > div.fewcent-95964255 > div._3YYSt.clearfix').text()
+
+                    const toiWrittenBy = $('#app > div > div.contentwrapper.clearfix > div > div._3nf_c > div._15wZO.innerbody > div.TFt6P > div._36ns3 > div > div.yYIu-.byline').text()
+
+                    responseJSON.data.context = toiBody;
+                    responseJSON.data.writtenBy = toiWrittenBy.split("/")[0].trim()
+                    const success = toiBody && toiWrittenBy ? true : false;
+
+                    responseJSON.success = success;
+
+
+                    return res.status(200).send(responseJSON);
+                } catch (err) {
+                    next(err);
+                }
+                break;
+
+            case "ht":
+                try {
+                    const $ = await getScrappedData(url);
+
+                    const htTypeE = '#dataHolder > div.fullStory.tfStory.current.videoStory > div.actionDiv.flexElm.topTime > div.secName > a'
+                    const htBodyE = "#dataHolder > div.fullStory.tfStory.current.videoStory > div.storyDetails"
+
+
+
+                } catch (err) {
+                    next(err);
+                }
+                break;
+
             default: res.status().json(responseJSON)
         }
     }

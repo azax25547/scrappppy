@@ -29,11 +29,10 @@ module.exports = {
         "writtenByIE": "#written_by1",
         "introDescriptionIE": "#section > div > div:nth-child(1) > div > h2",
         "toiHeadings": "#c_wdt_list_1 > ul > li > span > a",
-        "htHeadings": "#dataHolder > div > h3 > a",
-        "htTypes": ".actionDiv > div.secName > a",
+        "htHeadings": "h3.hdg3 > a",
+        // "#topnews > section > div.htImpressionTracking > div.cartHolder.bigCart.track > h3 > a"
         "otvHeading": "body > section.main-article > div > div > div.col-lg-9.col-md-8.col-sm-12.col-xs-12.sticky > div > div > a > h5",
         "otvLink": "body > section.main-article > div > div > div.col-lg-9.col-md-8.col-sm-12.col-xs-12.sticky > div > div > a",
         "otvShortDescription": "body > section.main-article > div > div > div.col-lg-9.col-md-8.col-sm-12.col-xs-12.sticky > div > div > p"
-
     }
 }

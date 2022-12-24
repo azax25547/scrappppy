@@ -67,7 +67,7 @@ jobs:
           command: echo "$DOCKER_PASSWORD" | docker login --username $DOCKER_USERNAME --password-stdin
       - run:
           name: Setup docker image
-          command: docker build -f Dockerfile.dev -t scrappy-dev .
+          command: docker build -f dockerfile.dev -t scrappy-dev .
       - run:
           name: tag the docker image to remote repository
           command: docker tag scrappy-dev azax25547/scrappy-dev

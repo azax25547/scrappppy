@@ -98,12 +98,12 @@ jobs:
           os: linux
           terraform_version: 1.3.6
       - terraform/fmt:
-          path: ../terraform
+          path: ./terraform/*/ecs
       - terraform/validate:
-          path: ../terraform
+          path: /terraform/*/ecs
       - terraform/init:
-          path: ../terraform
+          path: /terraform/*/ecs
       - terraform/plan:
-          path: ../terraform
+          path: /terraform/*/ecs
 
 # VS Code Extension Version: 1.5.0

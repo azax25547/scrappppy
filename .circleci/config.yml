@@ -84,7 +84,8 @@ jobs:
           name: Push the image to Dockerhub
           command: docker push azax25547/scrappy-dev:${CIRCLE_BRANCH}
   deploy-ecs:
-    machine: ubuntu-2004:202010-01
+    machine: 
+      image: ubuntu-2004:202010-01
     steps:
       - checkout
       - run:

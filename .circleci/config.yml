@@ -98,7 +98,9 @@ jobs:
           os: linux
           terraform_version: 1.3.6
       - terraform/fmt:
+          checkout: true
           path: ./terraform/*/ecs
+          context: terraform
       - terraform/validate:
           path: /terraform/*/ecs
       - terraform/init:

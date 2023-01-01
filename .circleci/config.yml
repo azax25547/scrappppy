@@ -14,9 +14,6 @@ workflows:
           post-steps:
             - jira/notify
       - test-app:
-          filters:
-            branches:
-              only: master
           requires:
             - code-scan
           post-steps:

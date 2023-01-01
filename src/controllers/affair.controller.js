@@ -177,8 +177,6 @@ module.exports = {
 
                     }
 
-                    console.log(htHeadings.length)
-                    console.log(htLinks.length);
 
                     let results = [];
                     htHeadings.forEach((el, i) => {
@@ -247,8 +245,6 @@ module.exports = {
                         })
                     }
 
-                    // otvHeadings = otvHeadings.filter((v) => v.contains("Latest"))
-                    // console.log(otvHeadings)
 
                     let results = [];
                     otvHeadings.forEach((el, i) => {

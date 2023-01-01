@@ -27,7 +27,7 @@ module.exports = {
                         details.push($(el).text());
                     })
                     let data = []
-                    title.map((el, i) => data.push({ title: el, details: details[i] }))
+                    title.forEach((el, i) => data.push({ title: el, details: details[i] }))
                     return res.status(200).json({
                         data,
                         success: true,
@@ -51,7 +51,7 @@ module.exports = {
                         details.push($(el).text()))
                     console.log(title)
                     let data = []
-                    title.map((el, i) => data.push({ title: el, details: details[i] }))
+                    title.forEach((el, i) => data.push({ title: el, details: details[i] }))
                     return res.status(200).json({
                         data,
                         success: true,
@@ -89,7 +89,7 @@ module.exports = {
                     $(constants.selectors.indianExpressHeadings).each((i, el) => indianExpressHeadingsLinks.push($(el).attr('href')))
 
                     let results = [];
-                    indianExpressHeadings.map((el, i) => {
+                    indianExpressHeadings.forEach((el, i) => {
                         let x = {
                             heading: indianExpressHeadings[i],
                             link: indianExpressHeadingsLinks[i],
@@ -134,7 +134,7 @@ module.exports = {
                     }
 
                     let results = [];
-                    toiHeadings.map((el, i) => {
+                    toiHeadings.forEach((el, i) => {
                         let x = {
                             heading: toiHeadings[i],
                             link: `${constants.urls.TOI}${toiLinks[i]}`
@@ -181,7 +181,7 @@ module.exports = {
                     console.log(htLinks.length);
 
                     let results = [];
-                    htHeadings.map((el, i) => {
+                    htHeadings.forEach((el, i) => {
                         let x = {
                             heading: htHeadings[i],
                             link: `${constants.urls.HT}${htLinks[i]}`,
@@ -251,7 +251,7 @@ module.exports = {
                     // console.log(otvHeadings)
 
                     let results = [];
-                    otvHeadings.map((el, i) => {
+                    otvHeadings.forEach((el, i) => {
                         let x = {
                             heading: otvHeadings[i],
                             link: otvLinks[i],

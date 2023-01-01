@@ -154,6 +154,7 @@ module.exports = {
                 try {
                     let htHeadings = [];
                     let htLinks = [];
+                    console.log('Bugfix Check')
 
                     let $ = await getScrappedData(constants.urls.HINDUSTAN_TIMES);
 
@@ -244,7 +245,6 @@ module.exports = {
                                 otvShortDescription.push($(el).text())
                         })
                     }
-
 
                     let results = [];
                     otvHeadings.forEach((el, i) => {

@@ -1,11 +1,7 @@
 const constants = require('../constants');
 const { dateOrdinal, getScrappedData } = require('../utils');
 
-let responseJSON = {
-    data: {},
-    success: false,
-    type: 'object'
-}
+
 
 module.exports = {
     getTopTenGeneralAffairsService: async (req, res, next) => {
@@ -68,6 +64,11 @@ module.exports = {
 
     },
     getHighLightsFromNewsMedias: async (req, res, next) => {
+        let responseJSON = {
+            data: {},
+            success: false,
+            type: 'object'
+        }
         const newsPaper = req.params.name;
 
         const page = parseInt(req.query.page);
@@ -273,6 +274,11 @@ module.exports = {
     getNewsDetailsFromNewsMedia: async (req, res, next) => {
         const { url } = req.body;
         const newsPaper = req.params.name;
+        let responseJSON = {
+            data: {},
+            success: false,
+            type: 'object'
+        }
 
         switch (newsPaper) {
             case "ie":
@@ -289,13 +295,12 @@ module.exports = {
                     responseJSON.data.writtenBy = $(constants.selectors.writtenByIE).text();
                     responseJSON.data.introDescription = $(constants.selectors.introDescriptionIE).text()
                     responseJSON.success = true;
-
+                    console.log(responseJSON);
                     res.status(200).json(responseJSON);
 
                 } catch (err) {
                     next(err);
                 }
-                console.log();
                 break;
             case "toi":
                 try {
@@ -350,7 +355,7 @@ module.exports = {
                 }
                 break;
 
-            default: res.status().json(responseJSON)
+            default: res.status(400).json(responseJSON)
         }
     }
 }

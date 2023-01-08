@@ -27,10 +27,17 @@ app.use((err, req, res, next) => {
             status: false,
             message: "Content is not available yet at source place. Please try after some time."
         })
-    else if (err) {
-        console.log(err.message);
-        res.status(500).send(err)
+    else if (err?.response?.status == 500) {
+        res.status(500).send({
+            status: false,
+            message: err.message
+        })
 
+    } else {
+        res.status(500).send({
+            status: false,
+            message: err.message
+        })
     }
 })
 

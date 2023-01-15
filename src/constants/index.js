@@ -43,8 +43,8 @@ module.exports = {
         "otvLink": "body > section.main-article > div > div > div.col-lg-9.col-md-8.col-sm-12.col-xs-12.sticky > div > div > a:nth-child(1)",
         "otvShortDescription": "body > section.main-article > div > div > div.col-lg-9.col-md-8.col-sm-12.col-xs-12.sticky > div > div > p",
         //toi-one
-        "contextTOI": "#app > div > div.contentwrapper.clearfix > div > div._3nf_c > div._15wZO.innerbody > div.TFt6P > div._1ZNdg > div._3B0JD > div.heightCalc > div.fewcent-96837112 > div",
-        "writtenByTOI": "#app > div > div.contentwrapper.clearfix > div > div._3nf_c > div._15wZO.innerbody > div.TFt6P > div._36ns3 > div > div.yYIu-.byline",
+        "contextTOI": "#app > div > div.contentwrapper.clearfix > div > div._3nf_c > div:nth-child(1) > div.TFt6P > div._1ZNdg > div._3B0JD > div.heightCalc > div > div._3YYSt",
+        "writtenByTOI": "#app > div > div.contentwrapper.clearfix > div > div._3nf_c > div:nth-child(1) > div.TFt6P > div._36ns3 > div > div.yYIu-.byline",
         //ht-one
         "contextHT": "#dataHolder > div.fullStory.tfStory.current.videoStory > div.storyDetails > div.detail > p",
         "writtenByHT": "#dataHolder > div.fullStory.tfStory.current.videoStory > div.actionDiv.flexElm.topTime > div.secName > a",

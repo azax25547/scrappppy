@@ -155,8 +155,6 @@ module.exports = {
                 try {
                     let htHeadings = [];
                     let htLinks = [];
-                    console.log('Bugfix Check')
-
                     let $ = await getScrappedData(constants.urls.HINDUSTAN_TIMES);
 
                     $(constants.selectors.htHeadings).each((i, el) => {
@@ -189,7 +187,7 @@ module.exports = {
                         results.push(x);
                     })
 
-                    responseJSON.data = results;
+                    responseJSON.data = results.filter(val => val.heading.includes('Horoscope Today') ? false : true);
                     responseJSON.success = true;
 
                     return res.status(200).json(responseJSON)
@@ -291,7 +289,7 @@ module.exports = {
                     introPara.push($(constants.selectors.introParagraphIE).text());
                     $(constants.selectors.restOfParagraphsIE).each((i, el) => restPara.push($(el).text()));
 
-                    responseJSON.data.context = introPara.concat(restPara).join("").trim();
+                    responseJSON.data.context = introPara.concat(restPara);
                     responseJSON.data.writtenBy = $(constants.selectors.writtenByIE).text();
                     responseJSON.data.introDescription = $(constants.selectors.introDescriptionIE).text()
                     responseJSON.success = true;
@@ -326,7 +324,7 @@ module.exports = {
                     let htContext = []
                     $(constants.selectors.contextHT).each((i, el) => htContext.push($(el).text()))
 
-                    responseJSON.data.context = htContext.join("").trim();
+                    responseJSON.data.context = htContext;
                     responseJSON.data.writtenBy = htWrittenBy;
                     responseJSON.data.introDescription = htIntroDescription;
                     responseJSON.success = htContext && htWrittenBy ? true : false;
@@ -345,7 +343,7 @@ module.exports = {
 
                     let otvContext = []
                     $(constants.selectors.contextOTV).each((i, el) => otvContext.push($(el).text()))
-                    responseJSON.data.context = otvContext.join("").trim();
+                    responseJSON.data.context = otvContext;
                     responseJSON.data.writtenBy = otvWrittenBy;
                     responseJSON.success = otvContext && otvWrittenBy ? true : false;
 

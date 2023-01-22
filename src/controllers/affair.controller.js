@@ -45,7 +45,6 @@ module.exports = {
 
                     $(constants.selectors.byjuDetails).each((i, el) =>
                         details.push($(el).text()))
-                    console.log(title)
                     let data = []
                     title.forEach((el, i) => data.push({ title: el, details: details[i] }))
                     return res.status(200).json({
@@ -293,7 +292,6 @@ module.exports = {
                     responseJSON.data.writtenBy = $(constants.selectors.writtenByIE).text();
                     responseJSON.data.introDescription = $(constants.selectors.introDescriptionIE).text()
                     responseJSON.success = true;
-                    console.log(responseJSON);
                     res.status(200).json(responseJSON);
 
                 } catch (err) {

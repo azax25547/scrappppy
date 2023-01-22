@@ -117,11 +117,11 @@ jobs:
           command: echo "$DOCKER_PASSWORD" | docker login --username $DOCKER_USERNAME --password-stdin
       - run:
           name: Setup docker image
-          command: docker build -f dockerfile.dev -t scrappy-dev:${CIRCLE_BRANCH} .
+          command: docker build -f dockerfile.dev -t scrappy-dev:${CIRCLE_BUILD_NUM} .
       - run:
           name: tag the docker image to remote repository
-          command: docker tag scrappy-dev:${CIRCLE_BRANCH} azax25547/scrappy-dev:${CIRCLE_BRANCH}
+          command: docker tag scrappy-dev:${CIRCLE_BUILD_NUM} azax25547/scrappy-dev:${CIRCLE_BUILD_NUM}
       - run:
           name: Push the image to Dockerhub
-          command: docker push azax25547/scrappy-dev:${CIRCLE_BRANCH}
+          command: docker push azax25547/scrappy-dev:${CIRCLE_BUILD_NUM}
 # VS Code Extension Version: 1.5.1

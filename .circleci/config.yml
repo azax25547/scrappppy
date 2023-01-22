@@ -21,7 +21,9 @@ workflows:
       - build-image:
           filters:
             branches:
-              only: master
+              only: 
+                - master
+                - dev-test
           requires:
             - test-app
           post-steps:

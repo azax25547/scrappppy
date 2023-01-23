@@ -57,7 +57,9 @@ jobs:
 
       - run: npm install
 
-      - run: npm install mocha-junit-reporter # just for CircleCI
+      - run: npm install mocha-junit-reporter 
+      
+      - run: npm install mocha -g # just for CircleCI
 
       - save_cache:
           paths:

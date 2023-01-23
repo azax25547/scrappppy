@@ -57,9 +57,9 @@ jobs:
 
       - run: npm install
 
-      - run: npm install mocha-junit-reporter 
-      
-      - run: sudo npm install mocha -g # just for CircleCI
+      - run: sudo npm install mocha -g
+
+      - run: npm install mocha-junit-reporter # just for CircleCI
 
       - save_cache:
           paths:
@@ -71,7 +71,7 @@ jobs:
       # Run mocha
       - run:
           name: npm test
-          command: mocha --reporter --reporter-options mochaFile=reports/mocha/test-results.xml
+          command: mocha src/test/**/*.js --recursive --exit --reporter mocha-junit-reporter --reporter-options mochaFile=reports/mocha/test-results.xml
           when: always
 
       # Run coverage report for Code Climate

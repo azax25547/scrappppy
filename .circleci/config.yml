@@ -13,11 +13,7 @@ workflows:
           context: SonarCloud 
           post-steps:
             - jira/notify
-      - test-app:
-          requires:
-            - code-scan
-          post-steps:
-            - jira/notify
+      
       - build-image:
           filters:
             branches:

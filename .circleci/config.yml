@@ -1,5 +1,5 @@
 orbs: # declare what orbs we are going to use
-  node: circleci/node@4.9.0 # the node orb provides common node-related configuration
+  node: circleci/node@5.1.0 # the node orb provides common node-related configuration
   jira: circleci/jira@1.3.1
   sonarcloud: sonarsource/sonarcloud@1.1.1
   
@@ -30,14 +30,15 @@ workflows:
 jobs:
   code-scan:
     docker:
-      - image: "cimg/node:16.4"
+      - image: "cimg/node:18.13.0
+"
     steps:
       - checkout
       - sonarcloud/scan
 
   test-app:
     docker:
-      - image: "cimg/node:16.4"
+      - image: "cimg/node:18.13.0"
     executor: node/default
     steps:
       - checkout
@@ -54,36 +55,8 @@ jobs:
           command: npm run test
       - run: npm run cov
       - store_test_results:
-          path: ./coverage
+          path: coverage
       # Run coverage report for Code Climate
-
-      - run:
-          name: Setup Code Climate test-reporter
-          command: |
-              # download test reporter as a static binary
-              curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
-              chmod +x ./cc-test-reporter
-              ./cc-test-reporter before-build
-          when: always
-
-      - run:
-          name: code-coverage
-          command: |
-              mkdir coverage
-              # nyc report requires that nyc has already been run,
-              # which creates the .nyc_output folder containing necessary data
-              ./node_modules/.bin/nyc report --reporter=text-lcov > coverage/lcov.info
-              ./cc-test-reporter after-build -t lcov
-          when: always
-
-      # Upload results
-
-      - store_test_results:
-          path: reports
-
-      - store_artifacts: # upload test coverage as artifact
-          path: ./coverage/lcov.info
-          prefix: tests
 
   build-image:
     docker:

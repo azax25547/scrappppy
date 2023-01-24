@@ -54,7 +54,7 @@ jobs:
           command: npm run test
       - run: npm run cov
       - store_test_results:
-          path: coverage
+          path: reports
       # Run coverage report for Code Climate
 
   build-image:

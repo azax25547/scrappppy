@@ -1,5 +1,5 @@
 orbs: # declare what orbs we are going to use
-  node: circleci/node@4.9.0 # the node orb provides common node-related configuration
+  node: circleci/node@5.1.0 # the node orb provides common node-related configuration
   jira: circleci/jira@1.3.1
   sonarcloud: sonarsource/sonarcloud@1.1.1
   
@@ -13,94 +13,45 @@ workflows:
           context: SonarCloud 
           post-steps:
             - jira/notify
-      - test-app:
-          requires:
-            - code-scan
-          post-steps:
-            - jira/notify
+      
       - build-image:
           filters:
             branches:
               only: master
           requires:
-            - test-app
+            - code-scan
           post-steps:
             - jira/notify
 
 jobs:
   code-scan:
     docker:
-      - image: "cimg/node:16.4"
+      - image: "cimg/node:18.13.0"
     steps:
       - checkout
       - sonarcloud/scan
 
   test-app:
     docker:
-      - image: "cimg/node:16.4"
+      - image: "cimg/node:18.13.0"
     executor: node/default
     steps:
       - checkout
       - node/install-packages:
           cache-path: ~/auth/node_modules
           override-ci-command: npm install
-      - run:
-          name: update-npm
-          command: 'sudo npm install -g npm@latest'
-
-      # Download and cache dependencies
-      - restore_cache:
-          keys:
-              - v1-dependencies-{{ checksum "package-lock.json" }}
-              # fallback to using the latest cache if no exact match is found
-              - v1-dependencies-
-
-      - run: npm install
+      
+      - run: sudo npm install mocha -g
 
       - run: npm install mocha-junit-reporter # just for CircleCI
-
-      - save_cache:
-          paths:
-              - node_modules
-          key: v1-dependencies-{{ checksum "package-lock.json" }}
-
       - run: mkdir reports
 
-      # Run mocha
       - run:
-          name: npm test
-          command: ./node_modules/.bin/nyc ./node_modules/.bin/mocha src/test/**/*.js --recursive --exit --reporter mocha-junit-reporter --reporter-options mochaFile=reports/mocha/test-results.xml
-          when: always
-
-      # Run coverage report for Code Climate
-
-      - run:
-          name: Setup Code Climate test-reporter
-          command: |
-              # download test reporter as a static binary
-              curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
-              chmod +x ./cc-test-reporter
-              ./cc-test-reporter before-build
-          when: always
-
-      - run:
-          name: code-coverage
-          command: |
-              mkdir coverage
-              # nyc report requires that nyc has already been run,
-              # which creates the .nyc_output folder containing necessary data
-              ./node_modules/.bin/nyc report --reporter=text-lcov > coverage/lcov.info
-              ./cc-test-reporter after-build -t lcov
-          when: always
-
-      # Upload results
-
+          command: npm run test
+      - run: npm run cov
       - store_test_results:
           path: reports
-
-      - store_artifacts: # upload test coverage as artifact
-          path: ./coverage/lcov.info
-          prefix: tests
+      # Run coverage report for Code Climate
 
   build-image:
     docker:

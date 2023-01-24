@@ -6,7 +6,7 @@
   "scripts": {
     "start-dev": "nodemon src/index.js",
     "start": "node src/index.js",
-    "test": "mocha --reporter mocha-junit-reporter src/test/**/*.js --exit",
+    "test": "mocha --reporter mocha-junit-reporter src/test/**/*.js --reporter-options mochaFile=reports/mocha/test-results.xml --exit",
     "cov": "nyc --reporter=html --reporter=text mocha src/test/**/*.js --timeout=10000 --exit"
   },
   "keywords": [],

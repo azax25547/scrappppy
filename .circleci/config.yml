@@ -42,39 +42,19 @@ jobs:
     steps:
       - checkout
       - node/install-packages:
-          app-dir: ~/project/scrappppy/
-          cache-path: node_modules
+          cache-path: ~/auth/node_modules
           override-ci-command: npm install
-      - run:
-          name: update-npm
-          command: 'sudo npm install -g npm@latest'
-
-      # Download and cache dependencies
-      - restore_cache:
-          keys:
-              - v1-dependencies-{{ checksum "package-lock.json" }}
-              # fallback to using the latest cache if no exact match is found
-              - v1-dependencies-
-
-      - run: npm install
-
+      
       - run: sudo npm install mocha -g
 
       - run: npm install mocha-junit-reporter # just for CircleCI
-
-      - save_cache:
-          paths:
-              - node_modules
-          key: v1-dependencies-{{ checksum "package-lock.json" }}
-
       - run: mkdir reports
 
-      # Run mocha
       - run:
-          name: npm test
-          command: mocha src/test/**/*.js --recursive --exit --reporter mocha-junit-reporter --reporter-options mochaFile=reports/mocha/test-results.xml
-          when: always
-
+          command: npm run test
+      - run: npm run cov
+      - store_test_results:
+          path: ./coverage
       # Run coverage report for Code Climate
 
       - run:

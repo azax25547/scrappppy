@@ -1,11 +1,15 @@
 const axios = require('axios');
+require('dotenv').config();
+
 let successResponse = {
     data: {},
 }
+
+const backendURL = process.env.PROD_PYTHON || "http://127.0.0.1:8000/";
 module.exports = {
     getNewsServiceStatus: async (req, res, next) => {
         try {
-            const response = await axios.get("http://127.0.0.1:8000/")
+            const response = await axios.get(`${backendURL}`)
             successResponse.data = response.data;
             successResponse.success = true;
             return res.status(200).send(successResponse);
@@ -16,7 +20,7 @@ module.exports = {
     getTodayNews: async (req, res, next) => {
         const { url, source } = req.query || "";
         try {
-            const response = await axios.post("http://127.0.0.1:8000/news",
+            const response = await axios.post(`${backendURL}/news`,
                 {
                     url,
                     source
@@ -36,7 +40,7 @@ module.exports = {
     getNewsContent: async (req, res, next) => {
         const { url, source } = req.query || "";
         try {
-            const response = await axios.post('http://127.0.0.1:8000/newsContent', {
+            const response = await axios.post(`${backendURL}/newsContent`, {
                 url, source
             })
             if (response.status === 204)

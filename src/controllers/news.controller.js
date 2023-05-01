@@ -9,7 +9,7 @@ const backendURL = process.env.PROD_PYTHON || "http://127.0.0.1:8000/";
 module.exports = {
     getNewsServiceStatus: async (req, res, next) => {
         try {
-            const response = await axios.get(`${backendURL}`)
+            const response = await axios.get(`${backendURL}/`)
             successResponse.data = response.data;
             successResponse.success = true;
             return res.status(200).send(successResponse);
@@ -20,7 +20,7 @@ module.exports = {
     getTodayNews: async (req, res, next) => {
         const { url, source } = req.query || "";
         try {
-            const response = await axios.post(`${backendURL}/news`,
+            const response = await axios.post(`${backendURL}/news/list`,
                 {
                     url,
                     source
@@ -40,7 +40,7 @@ module.exports = {
     getNewsContent: async (req, res, next) => {
         const { url, source } = req.query || "";
         try {
-            const response = await axios.post(`${backendURL}/newsContent`, {
+            const response = await axios.post(`${backendURL}/news/content`, {
                 url, source
             })
             if (response.status === 204)
